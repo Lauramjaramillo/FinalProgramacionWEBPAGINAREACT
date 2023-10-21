@@ -74,17 +74,16 @@ export const Form1 = () => {
 
                 console.log(formData);
 
-                fetch("localhost/logutc", {
+                fetch("http://localhost:3000/logutc", {
                     method: "POST",
                     headers: {
                         "content-type": "application/json",
                     },
                     body: JSON.stringify(formData),
-                });
-            
-            alert('Formulario enviado correctamente');
+                });         
+           
         } else {
-            // Muestra errores en el estado
+            
             setErrors(newErrors);
         }
     };
@@ -243,4 +242,6 @@ export const Form1 = () => {
             </div >
         </div >
     );
-};
+    };
+
+
