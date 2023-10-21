@@ -60,17 +60,21 @@ function Cardc(props) {
   const { product } = props;
 
   return product ? (
-    <div className="" style={{ width: "310px", border: "1px solid black" }}>
-      <img src={product.images[0]} className="card-img-top" alt="..." />
-      <div className="card-body">
-        <h5 className="card-title">{product.title}</h5>
-        <p className="card-text">{product.price}</p>
-        <a href="#" className="btn btn-dark btn-sm">
-          Agregar al carrito
-        </a>
+    
+      <div className="col " style={{ padding: "3rem" }}>
+        <div className="card text-center h-100" style={{ width: "13rem" }}>
+          <img src={product.images[0]} className="card-img-top w-100 h-100" alt="..." />
+          <div className="card-body">
+            <h5 className="card-title">{product.title}</h5>
+            <p className="card-text">{product.price}</p>
+            <a href="#" className="btn btn-dark btn-sm">
+              Agregar al carrito
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
-  ) : null;
+    
+  ) :null;
 }
 
 function Appc() {
@@ -87,14 +91,11 @@ function Appc() {
 
   return data ? (
     <div className="App">
-      <div
-        className="container d-grid justify-content-around gap-4"
-        style={{ width: "800px", gridTemplateColumns: "1fr 1fr 1fr" }}
-      >
-       
-        { data.products && data.products.map((item) => (
-          <Cardc key={item.id} product={item}/>
-          
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+
+        {data.products && data.products.map((item) => (
+          <Cardc key={item.id} product={item} />
+
         ))}
       </div>
     </div>
