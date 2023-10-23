@@ -137,32 +137,81 @@ null;
 }
 
 
-function Cart({ cart, removeFromCart, emptyCart ,totalCost}) {
-return (
-  <div className="cart">
-  <h2 className='titulo2'>Carrito de compras</h2>
-  <ul>
-    {cart.length === 0 ? (
-      <p>El carrito está vacío</p>
-    ) : (
-      cart.map((item) => (
-        <li key={item.id}>
-          {item.title} - Precio: ${item.price.toFixed(2)} - Cantidad: {item.quantity} - Total: ${(
-            item.price * item.quantity
-          ).toFixed(2)}
-          <button onClick={() => removeFromCart(item.id)}>Remover</button>
-        </li>
-      ))
-    )}
-  </ul>
-  {cart.length > 0 && (
-    <div>
-      <p>Precio total: ${totalCost.toFixed(2)}</p>
-      <button onClick={emptyCart}>Vaciar carrito</button>
+
+function Cart({ cart, removeFromCart, emptyCart, totalCost }) {
+  const [purchaseInfo, setPurchaseInfo] = useState(null);
+
+  const handlePurchase = () => {
+    const totalProducts = cart.reduce((total, item) => total + item.quantity, 0);
+
+    const purchaseData = {
+      totalProducts,
+      items: cart.map((item) => ({
+        title: item.title,
+        quantity: item.quantity,
+        total: (item.price * item.quantity).toFixed(2),
+      })),
+      totalCost: totalCost.toFixed(2),
+    };
+
+    // Convierte el objeto en formato JSON
+    const purchaseJSON = JSON.stringify(purchaseData);
+
+    fetch('http://localhost:3000/comprar', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: purchaseJSON,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error al realizar la compra');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Maneja la respuesta del servidor aquí
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Error en la compra:', error);
+      });
+
+    
+    setPurchaseInfo(purchaseData);
+  };
+
+  return (
+    <div className="cart">
+      <h2 className="titulo2">Carrito de compras</h2>
+      <ul>
+        {cart.length === 0 ? (
+          <p>El carrito está vacío</p>
+        ) : (
+          cart.map((item) => (
+            <li key={item.id}>
+              {item.title} - Precio: ${item.price.toFixed(2)} - Cantidad: {item.quantity} - Total: ${(
+                item.price * item.quantity
+              ).toFixed(2)}
+              <button onClick={() => removeFromCart(item.id)}>Remover</button>
+            </li>
+          ))
+        )}
+      </ul>
+      {cart.length > 0 && (
+        <div>
+          <p>Precio total: ${totalCost.toFixed(2)}</p>
+          <div className="d-flex justify-content-around">
+            <button className="purchase-button" onClick={handlePurchase}>
+              Comprar
+            </button>
+            <button onClick={emptyCart}>Vaciar carrito</button>
+          </div>
+        </div>
+      )}
     </div>
-  )}
-</div>
-);
+  );
 }
 
 

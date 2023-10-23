@@ -116,8 +116,33 @@
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 10px; /* Margen superior */
+  width: 150px;
+  height: 35px;
+  
+  
 }
 
 .cart ul li button:hover {
   background-color: #c0392b;
+}
+
+
+/* Estilos para el botón "Comprar" */
+.cart button.purchase-button {
+  background-color: #4CAF50; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  border: none; /* Quita el borde */
+  padding: 5px 10px; /* Espaciado interno */
+  border-radius: 5px; /* Borde redondeado */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  margin-top: 10px; /* Margen superior */
+  width: 150px;
+  height: 35px;
+  
+ 
+}
+
+.cart button.purchase-button:hover {
+  background-color: #45A049; /* Color de fondo al pasar por encima */
 }
