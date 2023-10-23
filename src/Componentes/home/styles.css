@@ -13,9 +13,10 @@
 
   .titulo2 {
     font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
-    font-size: 5px;
+    font-size: 24px;
+    margin-bottom: 15px;
     padding: 15px 15px; /* Este es como el espacio al lado del titulo */
-    text-align: left;
+    text-align: center;
     text-transform: uppercase;
     text-rendering: optimizeLegibility;
     color: #1a1a19;
@@ -30,3 +31,93 @@
       padding: 40px;
       height: 300px;
   }
+
+  /* Estilos para el carrito de compras */
+.cart {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+
+.cart ul {
+  list-style: none;
+  padding: 0;
+}
+
+.cart ul li {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart ul li button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cart ul li button:hover {
+  background-color: #c0392b;
+}
+
+.cart button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 5px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.cart button:hover {
+  background-color: #2980b9;
+}
+
+/* Estilos para el total cost */
+.cart p {
+  font-size: 18px;
+  margin-top: 10px;
+  text-align: right;
+  color: #333;
+}
+
+/* Estilos para la lista de productos en el carrito */
+.cart ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  margin-bottom: 5px;
+}
+
+.cart ul li img {
+  width: 40px;
+  height: 40px;
+  margin-right: px;
+}
+
+.cart ul li button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cart ul li button:hover {
+  background-color: #c0392b;
+}
