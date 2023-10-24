@@ -1,34 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import { NavHomeU } from "../Navbar/Navbar";
 
-function NavAdmH(props) {
-    return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div className="container-fluid">
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <a className="nav-link active" href="#">Página principal</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link active" href="#">Registrarse</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link active" href="#">Ingresar</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link active" href="#">Administrador</a>
-                        </li>
-                    </ul>
 
-                    <form className="d-flex">
-                        <input className="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" />
-                        <button className="btn btn-secondary" type="submit">Buscar</button>
-                    </form>
-                </div>
-            </div>
-        </nav>
-    );
-}
 
 function NavAdmVer(props) {
     return (
@@ -64,7 +37,7 @@ function NavAdmVer(props) {
 function Admin() {
     return (
         <div>
-            <NavAdmH />
+            <NavHomeU  title1 ="Inicio" url1="http://localhost:3000/" title2 ="Ingresar" url2="http://localhost:3000/ingresar" title3="Home" url3="http://localhost:3000/comprar"></NavHomeU>
             <NavAdmVer />
         </div>
     );

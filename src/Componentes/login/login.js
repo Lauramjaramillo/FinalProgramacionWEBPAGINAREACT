@@ -21,13 +21,13 @@ export const Login = () => {
   };
 
   const handleIngresarClick = (e) => {
-    e.preventDefault(); // Agregar esta línea
+    e.preventDefault();
     const newErrors = {};
-  
+
     if (!formData.usuario.trim()) {
       newErrors.usuario = "El campo de usuario es obligatorio";
     }
-  
+
     if (!formData.contraseña.trim()) {
       newErrors.contraseña = "El campo de contraseña es obligatorio";
     } else if (formData.contraseña.length < 8) {
@@ -35,9 +35,10 @@ export const Login = () => {
     }
     if (Object.keys(newErrors).length === 0) {
       console.log(formData);
-  
-      fetch("http://localhost/login", {
+
+      fetch("http://localhost:5000/inicio", {
         method: "POST",
+        mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
         },
@@ -45,7 +46,7 @@ export const Login = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          // Realiza acciones con la respuesta del servidor si es necesario
+
           alert("Formulario enviado correctamente");
         })
         .catch((error) => {
@@ -78,9 +79,12 @@ export const Login = () => {
             onChange={handleChange}
           />
         </div>
+
         {errores.usuario && (
           <div className="text-danger">{errores.usuario}</div>
         )}
+
+
         <div className={`input-group mt-1 ${errores.contraseña ? "has-error" : ""}`}>
           <div className="input-group-text bg-dark">
             <img src={password} alt="password-icon" style={{ height: "1rem" }} />
@@ -99,6 +103,7 @@ export const Login = () => {
         {errores.contraseña && (
           <div className="text-danger">{errores.contraseña}</div>
         )}
+
         <div className="d-flex justify-content-around mt-1">
           <div className="d-flex align-items-center gap-1">
             <input className="form-check-input" type="checkbox" />
@@ -108,11 +113,12 @@ export const Login = () => {
             <a
               href="#"
               className="text-decoration-none text-info fw-semibold fst-italic"
-            >
-              ¿Olvidaste tu contraseña?
-            </a>
+
+            >¿Olvidaste tu contraseña?</a>
           </div>
         </div>
+
+        
         <button
           className="btn btn-dark text-white w-100 mt-4 fw-semibold shadow-sm"
           onClick={handleIngresarClick}
@@ -122,16 +128,18 @@ export const Login = () => {
 
         <div className="d-flex gap-1 justify-content-center mt-1">
           <div>¿Aún no tienes una cuenta?</div>
-          <a href="#" className="text-decoration-none text-info fw-semibold">
+          <a href="http://localhost:3000/registro" className="text-decoration-none text-info fw-semibold">
             Registrarse
           </a>
         </div>
+
+
         <div className="d-flex gap-1 justify-content-center mt-2">
           <div>Volver a la página de inicio</div>
-          <a href="#" className="text-decoration-none text-info fw-semibold">Inicio</a>
+          <a href="http://localhost:3000/" className="text-decoration-none text-info fw-semibold">Inicio</a>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

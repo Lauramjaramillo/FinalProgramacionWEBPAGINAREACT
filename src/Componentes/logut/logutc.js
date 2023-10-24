@@ -27,7 +27,7 @@ export const Form1 = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Realiza la validación aquí
+        
         const newErrors = {};
 
         // Validación de campo obligatorio para el primer nombre
@@ -69,24 +69,33 @@ export const Form1 = () => {
         }
 
         if (Object.keys(newErrors).length === 0) {
-           
-                e.preventDefault();
-
-                console.log(formData);
-
-                fetch("http://localhost:3000/logutc", {
-                    method: "POST",
-                    headers: {
-                        "content-type": "application/json",
-                    },
-                    body: JSON.stringify(formData),
-                });         
-           
-        } else {
             
+            fetch("http://localhost:5000/registro", {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error("Error al enviar datos al servidor");
+                    }
+                })
+                .then((responseData) => {
+                    console.log("Datos recibidos con éxito", responseData);
+                })
+                .catch((error) => {
+                    console.error("Error en la solicitud:", error);
+                });
+        } else {
             setErrors(newErrors);
         }
     };
+
 
     return (
         <div className="d-flex justify-content-center align-items-center vh-100">
@@ -235,13 +244,13 @@ export const Form1 = () => {
                 </form>
                 <div className="d-flex gap-1 justify-content-center mt-2">
                     <div>Volver a la página de inicio</div>
-                    <a href="#" className="text-decoration-none text-info fw-semibold">
+                    <a href="http://localhost:3000/" className="text-decoration-none text-info fw-semibold">
                         Inicio
                     </a>
                 </div>
             </div >
         </div >
     );
-    };
+};
 
 
