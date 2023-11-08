@@ -68,7 +68,7 @@ function Admin() {
 
     if (token) {
       try {
-        const response = await fetch("http://localhost:5000/administrador", {
+        const response = await fetch("http://localhost:3000/administrador", {
           method: "GET",
           headers: {
             Authorization: token,

@@ -9,7 +9,7 @@ function Inventario() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/productoslist/")
+    fetch("http://localhost:3000/productoslist/")
       .then((response) => {
         if (!response.ok) {
           toast.error("No se logró la conexión");

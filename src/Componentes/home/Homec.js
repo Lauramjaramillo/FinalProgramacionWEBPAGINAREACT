@@ -63,7 +63,7 @@ function Appc() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:5000/productoslist/")
+    fetch("http://localhost:3000/productoslist/")
       .then((response) => {
         if (!response.ok) {
           toast.error("No se logró la conexion");
@@ -124,7 +124,7 @@ function Cart({ cart, removeFromCart, emptyCart, totalCost }) {
     // Convierte el objeto en formato JSON
     const purchaseJSON = JSON.stringify(purchaseData);
 
-    fetch("http://localhost:5000/comprar", {
+    fetch("http://localhost:3000/comprar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

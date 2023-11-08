@@ -7,7 +7,7 @@ function PurchaseTable() {
   const [purchaseData, setPurchaseData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/compraslist", {
+    fetch("http://localhost:3000/compraslist", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

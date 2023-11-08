@@ -78,7 +78,7 @@ export const Form1 = () => {
     }
 
     if (Object.keys(newErrors).length === 0) {
-      fetch("http://localhost:5000/registro", {
+      fetch("http://localhost:3000/registro", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
