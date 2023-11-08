@@ -1,46 +1,134 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { NavHomeU } from "../Navbar/Navbar";
-
-
+import { Inventario } from "../Inventario/Inventario";
+import { PurchaseTable } from "../Datos compra/Datos_Compra";
+import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function NavAdmVer(props) {
-    return (
+  const handleInventarioClick = () => {
+    props.onInventarioClick(); // Llama a la función proporcionada por el padre
+  };
+
+  const toggleHistorialCompras = () => {
+    props.onHistorialComprasClick(); // Llama a la función proporcionada por el padre
+  };
+
+  return (
+    <div>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
-            <div className="row flex-nowrap">
-                <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-                    <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                        <a href="/" className="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                            <span className="fs-5 d-none d-sm-inline">Menu administrador</span>
-                        </a>
-                        <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                            <li className="nav-item">
-                                <a href="#" className="nav-link align-middle px-0">
-                                    <i className="fs-4 bi-house"></i> <span className="ms-1 d-none d-sm-inline text-white">Inventario</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="nav-link px-0 align-middle">
-                                    <i className="fs-4 bi-table"></i> <span className="ms-1 d-none d-sm-inline text-white">Generar registro de ventas</span></a>
-                            </li>
-                            <li>
-                                <a href="#" className="nav-link px-0 align-middle">
-                                    <i className="fs-4 bi-grid"></i> <span className="ms-1 d-none d-sm-inline text-white">Historial de compras</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <a
+                  href="#"
+                  onClick={handleInventarioClick}
+                  className="nav-link"
+                >
+                  Inventario
+                </a>
+              </li>
+
+              <li className="nav-item">
+                <a
+                  href="#"
+                  onClick={toggleHistorialCompras}
+                  className="nav-link"
+                >
+                  Historial de compras
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-    );
+      </nav>
+    </div>
+  );
 }
 
 function Admin() {
-    return (
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showInventario, setShowInventario] = useState(false);
+  const [showHistorialCompras, setShowHistorialCompras] = useState(false);
+  const navigate = useNavigate();
+
+  async function checkAdminAccess() {
+    const token = localStorage.getItem("jwtToken");
+
+    if (token) {
+      try {
+        const response = await fetch("http://localhost:5000/administrador", {
+          method: "GET",
+          headers: {
+            Authorization: token,
+          },
+        });
+
+        const data = await response.json();
+
+        if (data.isAdmin === true) {
+          toast.success("Bienvenido administrador");
+          setIsAdmin(true);
+        } else {
+          navigate("/ingresar");
+        }
+      } catch (error) {
+        toast.error("Error");
+      }
+    } else {
+      navigate("/ingresar");
+    }
+  }
+
+  const toggleInventario = () => {
+    setShowInventario(!showInventario);
+    setShowHistorialCompras(false);
+  };
+
+  const toggleHistorialCompras = () => {
+    setShowHistorialCompras(!showHistorialCompras);
+    setShowInventario(false);
+    
+  };
+
+  useEffect(() => {
+    checkAdminAccess();
+  }, []);
+
+  return (
+    <div>
+      <NavHomeU
+        title1="Inicio"
+        url1="http://localhost:3000/"
+        title2="Ingresar"
+        url2="http://localhost:3000/ingresar"
+        title3="Página compras"
+        url3="http://localhost:3000/comprar"
+      />
+      {isAdmin && (
         <div>
-            <NavHomeU  title1 ="Inicio" url1="http://localhost:3000/" title2 ="Ingresar" url2="http://localhost:3000/ingresar" title3="Home" url3="http://localhost:3000/comprar"></NavHomeU>
-            <NavAdmVer />
+          <NavAdmVer
+            onInventarioClick={toggleInventario}
+            onHistorialComprasClick={toggleHistorialCompras}
+          />
+          {showInventario && <Inventario />}
+          {showHistorialCompras && <PurchaseTable />}{" "}
+          {/* Muestra PurchaseTable si showHistorialCompras es true */}
         </div>
-    );
+      )}
+    </div>
+  );
 }
 
-export {Admin};
+export { Admin };

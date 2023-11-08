@@ -1,7 +1,7 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Pokemon from './assets/pokemon.png';
-import { NavHomeU } from '../Navbar/Navbar.js';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Pokemon from "./assets/pokemon.png";
+import { NavHomeU } from "../Navbar/Navbar.js";
 
 function TextIndex(props) {
   const loremText = `
@@ -25,7 +25,7 @@ function TextIndex(props) {
           className="imageninicio shadow"
           src={props.img}
           alt=""
-          style={{ height: '4rem' }}
+          style={{ height: "4rem" }}
         />
       </div>
     </div>
@@ -34,15 +34,14 @@ function TextIndex(props) {
 
 function FooterIndex(props) {
   const contactInfo = {
-    'Colombia': '+57 300 200 200 200',
-    'Estados Unidos': '+1 100 200 200',
-    
+    Colombia: "+57 300 200 200 200",
+    "Estados Unidos": "+1 100 200 200",
   };
 
   const socialLinks = [
-    'Instagram: miempresa',
-    'Facebook: miempresa',
-    'Youtube: miempresa',
+    "Instagram: miempresa",
+    "Facebook: miempresa",
+    "Youtube: miempresa",
   ];
 
   return (
@@ -61,7 +60,9 @@ function FooterIndex(props) {
             </p>
           </div>
           <div className="col-lg-6 col-md-12 mb-4 mb-md-0">
-            <h5 className="text-uppercase">Siguenos en nuestras redes sociales</h5>
+            <h5 className="text-uppercase">
+              Siguenos en nuestras redes sociales
+            </h5>
             <p>
               {socialLinks.map((link) => (
                 <div key={link}>
@@ -77,12 +78,16 @@ function FooterIndex(props) {
   );
 }
 
-
 function IndexPage(props) {
   return (
-    <div style={{ paddingBottom: '100px' }}>
-      <NavHomeU title1 ="Ingresar" url1="http://localhost:3000/ingresar" title2="Registro" url2="http://localhost:3000/registro" title3="Administrador" url3="http://localhost:3000/administrador"></NavHomeU>
-      
+    <div style={{ paddingBottom: "100px" }}>
+      <NavHomeU
+        title1="Ingresar"
+        url1="http://localhost:3000/ingresar"
+        title2="Registro"
+        url2="http://localhost:3000/registro"
+      ></NavHomeU>
+
       <TextIndex img={Pokemon} />
       <FooterIndex />
     </div>

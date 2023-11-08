@@ -1,10 +1,14 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
-import username from "./assets/username-icon.svg"
-import password from "./assets/password-icon.svg"
-import icono from "./assets/usuario.svg"
+import username from "./assets/username-icon.svg";
+import password from "./assets/password-icon.svg";
+import icono from "./assets/usuario.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     usuario: "",
     contraseña: "",
@@ -25,7 +29,7 @@ export const Login = () => {
     const newErrors = {};
 
     if (!formData.usuario.trim()) {
-      newErrors.usuario = "El campo de usuario es obligatorio";
+      newErrors.usuario = "El campo de email es obligatorio";
     }
 
     if (!formData.contraseña.trim()) {
@@ -35,26 +39,34 @@ export const Login = () => {
     }
     if (Object.keys(newErrors).length === 0) {
       console.log(formData);
-
-      fetch("http://localhost:5000/inicio", {
+    
+      fetch("http://localhost:5000/ingresar", {
         method: "POST",
-        mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       })
-        .then((response) => response.json())
-        .then((data) => {
-
-          alert("Formulario enviado correctamente");
-        })
+        .then(async(response) => {
+          if (response.ok) {
+            const data = await response.json()
+            localStorage.setItem("jwtToken", data.token);
+            toast.success("Se ha ingresado correctamente");
+            navigate("/comprar");
+          } else if (response.status === 401) {
+            toast.error("Usuario o contraseña inválida");            
+          } else {
+            toast.error("Error en la solicitud"); 
+          }
+        })        
         .catch((error) => {
-          console.error("Error al enviar el formulario:", error);
+          
+          toast.error("Error: ", error);
         });
     } else {
       setErrores(newErrors);
     }
+    
   };
 
   return (
@@ -64,15 +76,22 @@ export const Login = () => {
           <img src={icono} alt="login-icon" style={{ height: "5rem" }} />
         </div>
         <div className="text-center fs-2 fw-bold">Acceso</div>
-        <div className={`input-group mt-4 ${errores.usuario ? "has-error" : ""}`}>
+        <div
+          className={`input-group mt-4 ${errores.usuario ? "has-error" : ""}`}
+        >
           <div className="input-group-text bg-dark">
-            <img src={username} alt="username-icon" style={{ height: "1rem" }} />
+            <img
+              src={username}
+              alt="username-icon"
+              style={{ height: "1rem" }}
+            />
           </div>
           <input
-            className={`form-control bg-light ${errores.usuario ? "border border-danger" : ""
-              }`}
+            className={`form-control bg-light ${
+              errores.usuario ? "border border-danger" : ""
+            }`}
             type="text"
-            placeholder="Usuario"
+            placeholder="Email"
             id="usuario"
             name="usuario"
             value={formData.usuario}
@@ -84,14 +103,22 @@ export const Login = () => {
           <div className="text-danger">{errores.usuario}</div>
         )}
 
-
-        <div className={`input-group mt-1 ${errores.contraseña ? "has-error" : ""}`}>
+        <div
+          className={`input-group mt-1 ${
+            errores.contraseña ? "has-error" : ""
+          }`}
+        >
           <div className="input-group-text bg-dark">
-            <img src={password} alt="password-icon" style={{ height: "1rem" }} />
+            <img
+              src={password}
+              alt="password-icon"
+              style={{ height: "1rem" }}
+            />
           </div>
           <input
-            className={`form-control bg-light ${errores.contraseña ? "border border-danger" : ""
-              }`}
+            className={`form-control bg-light ${
+              errores.contraseña ? "border border-danger" : ""
+            }`}
             type="password"
             placeholder="Contraseña"
             id="contraseña"
@@ -113,12 +140,12 @@ export const Login = () => {
             <a
               href="#"
               className="text-decoration-none text-info fw-semibold fst-italic"
-
-            >¿Olvidaste tu contraseña?</a>
+            >
+              ¿Olvidaste tu contraseña?
+            </a>
           </div>
         </div>
 
-        
         <button
           className="btn btn-dark text-white w-100 mt-4 fw-semibold shadow-sm"
           onClick={handleIngresarClick}
@@ -128,18 +155,24 @@ export const Login = () => {
 
         <div className="d-flex gap-1 justify-content-center mt-1">
           <div>¿Aún no tienes una cuenta?</div>
-          <a href="http://localhost:3000/registro" className="text-decoration-none text-info fw-semibold">
+          <a
+            href="http://localhost:3000/registro"
+            className="text-decoration-none text-info fw-semibold"
+          >
             Registrarse
           </a>
         </div>
 
-
         <div className="d-flex gap-1 justify-content-center mt-2">
           <div>Volver a la página de inicio</div>
-          <a href="http://localhost:3000/" className="text-decoration-none text-info fw-semibold">Inicio</a>
+          <a
+            href="http://localhost:3000/"
+            className="text-decoration-none text-info fw-semibold"
+          >
+            Inicio
+          </a>
         </div>
       </div>
-    </div >
+    </div>
   );
-}
-
+};
