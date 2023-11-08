@@ -69,7 +69,7 @@ function Admin() {
     if (token) {
       try {
         const response = await fetch("http://localhost:3000/administrador", {
-          method: "GET",
+          method: "POST",
           headers: {
             Authorization: token,
           },
@@ -84,7 +84,7 @@ function Admin() {
           navigate("/ingresar");
         }
       } catch (error) {
-        toast.error("Error");
+        toast.error("Errorr"+ error);
       }
     } else {
       navigate("/ingresar");
